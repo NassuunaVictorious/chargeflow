@@ -23,10 +23,16 @@ const userSchema = new mongoose.Schema({
     select: false
   },
   vehicleType: {
-    type: String,
-    enum: ['sedan', 'suv', 'hatchback', 'truck', 'sports', 'other'],
-    default: 'sedan'
-  },
+  type: String,
+  enum: [
+    'electric_car',
+    'electric_bike',
+    'electric_motorcycle'
+  ],
+  required: true,
+  default: 'electric_car'
+}
+ ,
   isAdmin: {
     type: Boolean,
     default: false

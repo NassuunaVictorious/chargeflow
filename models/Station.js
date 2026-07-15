@@ -1,84 +1,194 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const stationSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'Station name is required'],
-    trim: true
+
+  name:{
+    type:String,
+    required:[true,"Station name is required"],
+    trim:true
   },
-  address: {
-    type: String,
-    required: [true, 'Address is required'],
-    trim: true
+
+
+  address:{
+    type:String,
+    required:[true,"Address is required"],
+    trim:true
   },
-  latitude: {
-    type: Number,
-    required: [true, 'Latitude is required'],
-    min: -90,
-    max: 90
+
+
+  // Uganda information
+  country:{
+    type:String,
+    default:"Uganda"
   },
-  longitude: {
-    type: Number,
-    required: [true, 'Longitude is required'],
-    min: -180,
-    max: 180
+
+
+  city:{
+    type:String,
+    enum:[
+      "Kampala",
+      "Entebbe",
+      "Jinja",
+      "Mbarara",
+      "Gulu",
+      "Mbale",
+      "Other"
+    ],
+    default:"Kampala"
   },
-  chargerType: {
-    type: String,
-    enum: ['Level 1', 'Level 2', 'DC Fast Charging', 'Tesla Supercharger'],
-    required: true
+
+
+
+  latitude:{
+    type:Number,
+    required:true,
+    min:-90,
+    max:90
   },
-  chargingSpeed: {
-    type: Number,
-    required: true,
-    description: 'kW rating'
+
+
+  longitude:{
+    type:Number,
+    required:true,
+    min:-180,
+    max:180
   },
-  price: {
-    type: Number,
-    required: true,
-    description: 'Price per kWh in dollars'
+
+
+
+  chargerType:{
+    type:String,
+    enum:[
+      "Level 1",
+      "Level 2",
+      "DC Fast Charging",
+      "Tesla Supercharger"
+    ],
+    default:"Level 2"
   },
-  totalChargers: {
-    type: Number,
-    required: true,
-    min: 1
+
+
+
+  chargingSpeed:{
+    type:Number,
+    required:true,
+    description:"Charging speed in kW"
   },
-  availableChargers: {
-    type: Number,
-    required: true,
-    min: 0,
-    validate: {
-      validator: function(v) {
-        return v <= this.totalChargers;
+
+
+
+  // UGX price per kWh
+  price:{
+    type:Number,
+    required:true,
+    description:"Charging price in UGX per kWh"
+  },
+
+
+
+  totalChargers:{
+    type:Number,
+    required:true,
+    min:1
+  },
+
+
+  availableChargers:{
+    type:Number,
+    required:true,
+    min:0,
+
+    validate:{
+      validator:function(value){
+
+        return value <= this.totalChargers;
+
       },
-      message: 'Available chargers cannot exceed total chargers'
+
+      message:
+      "Available chargers cannot exceed total chargers"
+
     }
+
   },
-  queueTime: {
-    type: Number,
-    default: 0,
-    description: 'Estimated queue time in minutes'
+
+
+
+  queueTime:{
+    type:Number,
+    default:0,
+    description:"Estimated waiting time in minutes"
   },
-  status: {
-    type: String,
-    enum: ['active', 'maintenance', 'offline'],
-    default: 'active'
+
+
+
+  status:{
+    type:String,
+    enum:[
+      "active",
+      "maintenance",
+      "offline"
+    ],
+
+    default:"active"
   },
-  rating: {
-    type: Number,
-    min: 0,
-    max: 5,
-    default: 4.0
+
+
+
+  rating:{
+    type:Number,
+    min:0,
+    max:5,
+    default:4
   },
-  imageUrl: {
-    type: String,
-    default: ''
+
+
+  imageUrl:{
+    type:String,
+    default:""
+  },
+
+
+  // Extra Uganda features
+  operator:{
+    type:String,
+    default:"ChargeFlow Uganda"
+  },
+
+
+  solarPowered:{
+    type:Boolean,
+    default:false
+  },
+
+
+  phoneNumber:{
+    type:String,
+    default:""
   }
-}, {
-  timestamps: true
+
+
+},
+{
+ timestamps:true
 });
 
-// Index for geospatial queries
-stationSchema.index({ latitude: 1, longitude: 1 });
 
-export default mongoose.model('Station', stationSchema);
+
+// Faster searching
+stationSchema.index({
+ latitude:1,
+ longitude:1
+});
+
+
+stationSchema.index({
+ city:1,
+ country:1
+});
+
+
+export default mongoose.model(
+"Station",
+stationSchema
+);

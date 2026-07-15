@@ -15,6 +15,18 @@ router.post('/register', async (req, res) => {
   try {
     const { name, email, password, vehicleType } = req.body;
 
+const allowedVehicles = [
+  'electric_car',
+  'electric_bike',
+  'electric_motorcycle'
+];
+
+if (!allowedVehicles.includes(vehicleType)) {
+  return res.status(400).json({
+    message: "Vehicle must be electric_car, electric_bike or electric_motorcycle"
+  });
+}
+
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists with this email' });
