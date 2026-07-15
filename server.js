@@ -28,20 +28,14 @@ const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
 
-    cors: {
-
-        origin: process.env.CLIENT_URL || "http://localhost:5173",
-
-        methods: [
-            "GET",
-            "POST",
-            "PUT",
-            "DELETE"
-        ],
-
-        credentials:true
-    }
-
+cors: {
+  origin: [
+    'https://shiny-dodol-478d3b.netlify.app',
+    'http://localhost:5173'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}
 });
 
 
@@ -56,13 +50,11 @@ app.set("io", io);
 
 
 app.use(cors({
-
-    origin:
-    process.env.CLIENT_URL ||
-    "http://localhost:5173",
-
-    credentials:true
-
+  origin: [
+    'https://shiny-dodol-478d3b.netlify.app',
+    'http://localhost:5173'
+  ],
+  credentials: true
 }));
 
 
