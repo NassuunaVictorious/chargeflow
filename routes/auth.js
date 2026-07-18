@@ -9,6 +9,11 @@ const router = express.Router();
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
 };
+router.get("/test", (req,res)=>{
+    res.json({
+        message:"AUTH ROUTE WORKING"
+    });
+});
 
 // POST /api/auth/register
 router.post('/register', async (req, res) => {
