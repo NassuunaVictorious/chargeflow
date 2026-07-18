@@ -18,7 +18,7 @@ const stations = [
 
     chargerType: "DC Fast Charging",
     chargingSpeed: 120,
-    price: 1500,
+    price: 20000,
 
     totalChargers: 4,
     availableChargers: 3,
@@ -46,7 +46,7 @@ const stations = [
 
     chargerType: "Level 2",
     chargingSpeed: 50,
-    price: 1200,
+    price: 25000,
 
     totalChargers: 3,
     availableChargers: 2,
@@ -61,21 +61,19 @@ const stations = [
 
     phoneNumber:"+256700000002"
   },
-
-
   {
-    name: "Entebbe Road Solar Charging Station",
-    address: "Entebbe Road, Wakiso",
+    name: "Kyanja Road Solar Charging Station",
+    address: "Kisasi Road, Kikaya",
     country:"Uganda",
-    city:"Entebbe",
+    city:"Kampala",
 
-    latitude:0.0512,
-    longitude:32.4658,
+    latitude:0.3949,
+    longitude:32.5999,
 
-    chargerType:"DC Fast Charging",
+    chargerType:"DC Slow Charging",
     chargingSpeed:100,
 
-    price:1400,
+    price:14000,
 
     totalChargers:5,
     availableChargers:4,
@@ -92,6 +90,242 @@ const stations = [
 
     phoneNumber:"+256700000003"
   },
+  {
+    name:"Makerere City EV Charging Point",
+    address:"Main Street, Kampala",
+
+    country:"Uganda",
+    city:"Kampala",
+
+    
+latitude:0.3325,longitude:32.5701,
+
+    chargerType:"Level 2",
+
+    chargingSpeed:60,
+
+    price:15000,
+
+
+    totalChargers:2,
+
+    availableChargers:2,
+
+
+    queueTime:0,
+
+    status:"active",
+
+    rating:4.3,
+
+    operator:"Kampala EV Network",
+
+    solarPowered:true,
+
+    phoneNumber:"+256700000004"
+  },
+
+  {
+    name: "Kyanja Road Solar Charging Station",
+    address: "Kisasi Road, Kikaya",
+    country:"Uganda",
+    city:"Kampala",
+
+    latitude:0.3949,
+    longitude:32.5999,
+
+    chargerType:"DC Slow Charging",
+    chargingSpeed:100,
+
+    price:14000,
+
+    totalChargers:5,
+    availableChargers:4,
+
+    queueTime:8,
+
+    status:"active",
+
+    rating:4.7,
+
+    operator:"ChargeFlow Uganda",
+
+    solarPowered:true,
+
+    phoneNumber:"+256700000003"
+  },
+  {
+    name:"Muyenga City EV Charging Point",
+    address:"Main Street, Kampala",
+
+    country:"Uganda",
+    city:"Kampala",
+
+    
+latitude:0.3325,longitude:32.5701,
+
+    chargerType:"Level 1",
+
+    chargingSpeed:60,
+
+    price:16000,
+
+
+    totalChargers:2,
+
+    availableChargers:2,
+
+
+    queueTime:0,
+
+    status:"active",
+
+    rating:4.3,
+
+    operator:"Muyenga EV Network",
+
+    solarPowered:true,
+
+    phoneNumber:"+256700000004"
+  },
+  
+
+  {
+    name:"  Nsambya City EV Charging Point",
+    address:"Main Street, Kampala",
+
+    country:"Uganda",
+    city:"Kampala",
+
+    latitude:0.3011,longitude:32.5878,
+
+
+    chargerType:"Level 1",
+
+    chargingSpeed:60,
+
+    price:16000,
+
+
+    totalChargers:2,
+
+    availableChargers:2,
+
+
+    queueTime:0,
+
+    status:"active",
+
+    rating:4.3,
+
+    operator:"Nsambya EV Network",
+
+    solarPowered:true,
+
+    phoneNumber:"+256700000004"
+  },
+
+  {
+    name:"  Bukoto City EV Charging Point",
+    address:"Main Street, Kampala",
+
+    country:"Uganda",
+    city:"Kampala",
+
+    latitude:0.3541,longitude:32.5833,
+
+
+    chargerType:"Level 1",
+
+    chargingSpeed:60,
+
+    price:16000,
+
+
+    totalChargers:2,
+
+    availableChargers:2,
+
+
+    queueTime:0,
+
+    status:"active",
+
+    rating:4.3,
+
+    operator:"Bukoto EV Network",
+
+    solarPowered:true,
+
+    phoneNumber:"+256700000004"
+  },
+
+
+  {
+    name: "Kyanja Road Solar Charging Station",
+    address: "Kisasi Road, Kikaya",
+    country:"Uganda",
+    city:"Kampala",
+
+    latitude:0.3949,
+    longitude:32.5999,
+
+    chargerType:"DC Slow Charging",
+    chargingSpeed:100,
+
+    price:14000,
+
+    totalChargers:5,
+    availableChargers:4,
+
+    queueTime:8,
+
+    status:"active",
+
+    rating:4.7,
+
+    operator:"ChargeFlow Uganda",
+
+    solarPowered:true,
+
+    phoneNumber:"+256700000003"
+  },
+  {
+    name:"Jinja City EV Charging Point",
+    address:"Main Street, Jinja",
+
+    country:"Uganda",
+    city:"Jinja",
+
+    latitude:0.4479,
+    longitude:33.2026,
+
+
+    chargerType:"Level 2",
+
+    chargingSpeed:60,
+
+    price:15000,
+
+
+    totalChargers:2,
+
+    availableChargers:2,
+
+
+    queueTime:0,
+
+    status:"active",
+
+    rating:4.3,
+
+    operator:"Jinja EV Network",
+
+    solarPowered:true,
+
+    phoneNumber:"+256700000004"
+  },
+
 
 
 
@@ -110,7 +344,7 @@ const stations = [
 
     chargingSpeed:60,
 
-    price:1000,
+    price:15000,
 
 
     totalChargers:2,
@@ -151,7 +385,7 @@ const stations = [
     chargingSpeed:90,
 
 
-    price:1300,
+    price:14500,
 
 
     totalChargers:3,
