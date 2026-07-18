@@ -1,9 +1,9 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import mongoose from 'mongoose';
-import { createServer } from 'http';
-import { Server } from 'socket.io';
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import { createServer } from "http";
+import { Server } from "socket.io";
 
 
 // Load environment variables
@@ -11,9 +11,9 @@ dotenv.config();
 
 
 // Import routes
-import authRoutes from './routes/auth.js';
-import stationRoutes from './routes/stations.js';
-import reportRoutes from './routes/reports.js';
+import authRoutes from "./routes/auth.js";
+import stationRoutes from "./routes/stations.js";
+import reportRoutes from "./routes/reports.js";
 
 
 // Initialize Express
@@ -23,23 +23,61 @@ const httpServer = createServer(app);
 
 
 // ================================
+// CORS CONFIGURATION
+// ================================
+
+const allowedOrigins = [
+    "https://shiny-dodol-478d3b.netlify.app",
+    "http://localhost:5173"
+];
+
+
+app.use(
+    cors({
+        origin: allowedOrigins,
+        methods: [
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE",
+            "OPTIONS"
+        ],
+        allowedHeaders: [
+            "Content-Type",
+            "Authorization"
+        ],
+        credentials: true
+    })
+);
+
+
+app.options("*", cors());
+
+
+
+// ================================
 // SOCKET.IO
 // ================================
 
 const io = new Server(httpServer, {
 
-cors: {
-  origin: [
-    'https://shiny-dodol-478d3b.netlify.app',
-    'http://localhost:5173'
-  ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
-}
+    cors: {
+
+        origin: allowedOrigins,
+
+        methods: [
+            "GET",
+            "POST"
+        ],
+
+        credentials: true
+
+    }
+
 });
 
 
-// Make socket available
+// Make socket available in routes
 app.set("io", io);
 
 
@@ -49,20 +87,12 @@ app.set("io", io);
 // ================================
 
 
-app.use(cors({
-  origin: [
-    'https://shiny-dodol-478d3b.netlify.app',
-    'http://localhost:5173'
-  ],
-  credentials: true
-}));
-
-
 app.use(express.json());
+
 
 app.use(
     express.urlencoded({
-        extended:true
+        extended: true
     })
 );
 
@@ -73,7 +103,7 @@ app.use(
 // ================================
 
 
-app.get("/", (req,res)=>{
+app.get("/", (req, res) => {
 
     res.json({
 
@@ -121,26 +151,29 @@ app.use(
 // ================================
 
 
-app.get("/api/health",(req,res)=>{
+app.get(
+    "/api/health",
+    (req, res) => {
 
-    res.json({
+        res.json({
 
-        status:"ok",
+            status: "ok",
 
-        database:
-        mongoose.connection.readyState === 1
-        ? "connected"
-        : "disconnected",
+            database:
+            mongoose.connection.readyState === 1
+            ? "connected"
+            : "disconnected",
 
-        uptime:
-        process.uptime(),
+            uptime:
+            process.uptime(),
 
-        timestamp:
-        new Date().toISOString()
+            timestamp:
+            new Date().toISOString()
 
-    });
+        });
 
-});
+    }
+);
 
 
 
@@ -149,80 +182,84 @@ app.get("/api/health",(req,res)=>{
 // ================================
 
 
-io.on("connection",(socket)=>{
+io.on(
+    "connection",
+    (socket) => {
 
 
-    console.log(
-        `🔌 Client connected: ${socket.id}`
-    );
+        console.log(
+            `🔌 Client connected: ${socket.id}`
+        );
 
 
-    socket.on(
-        "joinStation",
-        (stationId)=>{
+        socket.on(
+            "joinStation",
+            (stationId) => {
 
-            socket.join(
-                `station:${stationId}`
-            );
+                socket.join(
+                    `station:${stationId}`
+                );
 
-        }
-    );
-
-
-    socket.on(
-        "leaveStation",
-        (stationId)=>{
-
-            socket.leave(
-                `station:${stationId}`
-            );
-
-        }
-    );
+            }
+        );
 
 
-    socket.on(
-        "disconnect",
-        ()=>{
+        socket.on(
+            "leaveStation",
+            (stationId) => {
 
-            console.log(
-                `🔌 Client disconnected: ${socket.id}`
-            );
+                socket.leave(
+                    `station:${stationId}`
+                );
 
-        }
-    );
+            }
+        );
 
 
-});
+        socket.on(
+            "disconnect",
+            () => {
+
+                console.log(
+                    `🔌 Client disconnected: ${socket.id}`
+                );
+
+            }
+        );
+
+
+    }
+);
 
 
 
 // ================================
-// ERROR HANDLING
+// ERROR HANDLER
 // ================================
 
 
 app.use(
-(err,req,res,next)=>{
+    (err, req, res, next) => {
 
-    console.error(
-        "Error:",
-        err
-    );
+        console.error(
+            "Error:",
+            err
+        );
 
 
-    res.status(
-        err.status || 500
-    )
-    .json({
+        res.status(
+            err.status || 500
+        )
+        .json({
 
-        message:
-        err.message ||
-        "Internal server error"
+            message:
+            err.message ||
+            "Internal server error"
 
-    });
+        });
 
-});
+    }
+);
 
 
 
@@ -232,18 +269,18 @@ app.use(
 
 
 app.use(
-(req,res)=>{
+    (req, res) => {
 
-    res.status(404)
-    .json({
+        res.status(404)
+        .json({
 
-        message:
-        `Route ${req.originalUrl} not found`
+            message:
+            `Route ${req.originalUrl} not found`
 
-    });
+        });
 
-});
-
+    }
+);
 
 
 
@@ -261,10 +298,10 @@ process.env.MONGO_URI;
 
 
 
-if(!MONGO_URI){
+if (!MONGO_URI) {
 
     console.error(
-        "❌ MONGO_URI missing"
+        " MONGO_URI missing"
     );
 
     process.exit(1);
@@ -275,7 +312,7 @@ if(!MONGO_URI){
 
 mongoose.connect(MONGO_URI)
 
-.then(()=>{
+.then(() => {
 
 
     console.log(
@@ -285,7 +322,7 @@ mongoose.connect(MONGO_URI)
 
     httpServer.listen(
         PORT,
-        ()=>{
+        () => {
 
 
             console.log(
@@ -305,11 +342,11 @@ mongoose.connect(MONGO_URI)
 })
 
 
-.catch((error)=>{
+.catch((error) => {
 
 
     console.error(
-        "❌ MongoDB connection error:",
+        "MongoDB connection error:",
         error.message
     );
 
